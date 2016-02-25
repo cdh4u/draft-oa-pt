@@ -1,0 +1,223 @@
+
+
+
+Network Working Group                                        C. Holmberg
+Internet-Draft                                                  Ericsson
+Updates: 3264 (if approved)                            February 25, 2016
+Intended status: Standards Track
+Expires: August 28, 2016
+
+
+       SDP Offer/Answer: Payload type number usage clarification
+                   draft-ietf-mmusic-dtls-sdp-00.txt
+
+Abstract
+
+   This document updates RFC 3264 by clarifying the scope of a mapping
+   from a particular dynamic payload type number to a codec (or codec
+   configuration) is for a given RTP media flow direction within a
+   session.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on August 28, 2016.
+
+Copyright Notice
+
+   Copyright (c) 2016 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+
+
+Holmberg                 Expires August 28, 2016                [Page 1]
+
+Internet-DraftSDP Offer/Answer: Payload type number usage cFebruary 2016
+
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   2.  Conventions . . . . . . . . . . . . . . . . . . . . . . . . .   2
+   3.  Update to RFC 3264  . . . . . . . . . . . . . . . . . . . . .   2
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
+   5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   4
+   6.  Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   7.  Normative References  . . . . . . . . . . . . . . . . . . . .   4
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   4
+
+1.  Introduction
+
+   This document updates RFC 3264 [RFC3264] by clarifying the scope of a
+   mapping from a particular dynamic payload type number to a codec (or
+   codec configuration) is for a given RTP media flow direction within a
+   session.
+
+2.  Conventions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in [RFC2119].
+
+3.  Update to RFC 3264
+
+   This section updates the first paragraph of section 8.3.2 of RFC
+   3264.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Holmberg                 Expires August 28, 2016                [Page 2]
+
+Internet-DraftSDP Offer/Answer: Payload type number usage cFebruary 2016
+
+
+Update to section 8.3.2
+-----------------------
+
+OLD TEXT:
+
+   The list of media formats used in the session MAY be changed.  To do
+   this, the offerer creates a new media description, with the list of
+   media formats in the "m=" line different from the corresponding media
+   stream in the previous SDP.  This list MAY include new formats, and
+   MAY remove formats present from the previous SDP.  However, in the
+   case of RTP, the mapping from a particular dynamic payload type
+   number to a particular codec within that media stream MUST NOT change
+   for the duration of a session.  For example, if A generates an offer
+   with G.711 assigned to dynamic payload type number 46, payload type
+   number 46 MUST refer to G.711 from that point forward in any offers
+   or answers for that media stream within the session.  However, it is
+   acceptable for multiple payload type numbers to be mapped to the same
+   codec, so that an updated offer could also use payload type number 72
+   for G.711.
+
+
+NEW TEXT:
+
+   The list of media formats used in the session MAY be changed.  To do
+   this, the offerer creates a new media description, with the list of
+   media formats in the "m=" line different from the corresponding media
+   stream in the previous SDP.  This list MAY include new formats, and
+   MAY remove formats present from the previous SDP. The scope of a mapping
+   from a particular dynamic payload type number to a codec (or codec
+   configuration) is for a given RTP media flow direction within a session.
+   The same dynamic payload type number can be mapped to another codec in
+   another RTP media flow direction within the same session. The mapping
+   MUST NOT change to a different coded (or coded configuration) for the
+   duration of a session. Eventhough not recommended, for a given direction,
+   multiple dynamic payload type numbers can be mapped to the same codec
+   (or codec configuration). Note that a mapping has been created once an
+   endpoint has sent and offer or answer, describing the mapping for a
+   given direction. Even if the offer or answer is rejected or discarded,
+   or if RTP media associated with the mapping is never sent, the mapping
+   MUST NOT change for the given direction within the session.
+
+   Within an offer or answer, the mapping is for the RTP media flow direction
+   towards the offerer/answerer, unless the media flow is indicated as 'sendonly'
+   in which case the mapping is for the media flow direction from the
+   offerer/answerer.
+
+
+
+
+
+
+Holmberg                 Expires August 28, 2016                [Page 3]
+
+Internet-DraftSDP Offer/Answer: Payload type number usage cFebruary 2016
+
+
+4.  Security Considerations
+
+   The security considerations associated with the SDP offer/answer
+   mechanism are described in RFC 3264.  As this document only clarifies
+   the existing procedures, it does not impact the security
+   considerations.
+
+5.  Acknowledgements
+
+   TBD
+
+6.  Change Log
+
+   [RFC EDITOR NOTE: Please remove this section when publishing]
+
+   Changes from draft-holmberg-mmusic-od-pt-xx
+
+   o  Add text
+
+7.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <http://www.rfc-editor.org/info/rfc2119>.
+
+   [RFC3264]  Rosenberg, J. and H. Schulzrinne, "An Offer/Answer Model
+              with Session Description Protocol (SDP)", RFC 3264,
+              DOI 10.17487/RFC3264, June 2002,
+              <http://www.rfc-editor.org/info/rfc3264>.
+
+   [RFC4566]  Handley, M., Jacobson, V., and C. Perkins, "SDP: Session
+              Description Protocol", RFC 4566, DOI 10.17487/RFC4566,
+              July 2006, <http://www.rfc-editor.org/info/rfc4566>.
+
+Author's Address
+
+   Christer Holmberg
+   Ericsson
+   Hirsalantie 11
+   Jorvas  02420
+   Finland
+
+   Email: christer.holmberg@ericsson.com
+
+
+
+
+
+
+
+Holmberg                 Expires August 28, 2016                [Page 4]
